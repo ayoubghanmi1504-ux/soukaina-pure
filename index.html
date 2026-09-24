@@ -3,99 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>Soukaina Pure | Le secret de votre beauté</title>
+    <title>Soukaina Pure | Votre santé, à l'état pur</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .bg-grid {
-            background-image: linear-gradient(to right, #f9f9f9 1px, transparent 1px),
-                              linear-gradient(to bottom, #f9f9f9 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center top;
-        }
-    </style>
 </head>
-<body class="bg-white text-[#222222] font-sans min-h-screen">
+<body class="bg-[#f8f9fa] text-[#222222] font-sans min-h-screen selection:bg-[#D32F2F] selection:text-white">
 
-    <!-- CABECERA SOUKAINA PURE -->
-    <header class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center justify-between relative z-20">
-        <a class="flex items-center mb-4 md:mb-0 cursor-pointer">
-            <img src="Soukaina Pure-logo-transparent.png" alt="Soukaina Pure" class="h-16 object-contain">
-        </a>
-        
-        <nav class="hidden md:flex flex-wrap items-center text-sm font-medium text-gray-500 justify-center gap-8">
-            <a href="#" class="hover:text-[#ECA89F] transition-colors">Productos</a>
-            <a href="#" class="hover:text-[#ECA89F] transition-colors">Nuestra Esencia</a>
-            <a href="#" class="hover:text-[#ECA89F] transition-colors">Testimonios</a>
-        </nav>
-        
-        <div class="flex items-center gap-4 mt-4 md:mt-0">
-            <button class="bg-[#222222] text-white text-sm py-2 px-6 rounded-md hover:bg-[#ECA89F] transition-colors">
-                Contactar
+<!-- CABECERA -->
+    <header class="bg-white/90 backdrop-blur-md fixed top-0 w-full z-50 border-b border-gray-100">
+        <div class="container mx-auto flex p-4 items-center justify-between">
+            <button class="md:hidden text-[#222222] hover:text-[#D32F2F]">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
+
+            <!-- Logo mucho más grande -->
+            <a href="#" class="flex items-center mx-auto md:mx-0 py-2">
+                <img src="assets/Soukaina-Pure-logo-transparent.png" alt="Soukaina Pure" class="h-20 md:h-24 object-contain">
+            </a>
+            
+            <nav class="hidden md:flex flex-wrap items-center text-sm font-bold text-gray-600 justify-center gap-8 mx-auto">
+                <a href="#catalogo" class="hover:text-[#D32F2F] transition-colors">CATÁLOGO</a>
+                <a href="#esencia" class="hover:text-[#D32F2F] transition-colors">NOTRE ESSENCE</a>
+            </nav>
+            
+            <div class="flex items-center gap-4">
+                <button class="text-sm font-bold text-gray-400 hover:text-black">FR | AR</button>
+                <button class="hidden md:block bg-[#D32F2F] text-white text-sm font-bold py-2 px-6 rounded-full hover:bg-[#222222] transition-colors">
+                    Contactar
+                </button>
+            </div>
         </div>
     </header>
-
-    <!-- SECCIÓN HERO -->
-    <section class="relative pt-12 pb-16 px-5 overflow-hidden bg-grid">
-        
-        <!-- Efecto Glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[500px] flex justify-center -z-10 pointer-events-none">
-            <div class="w-96 h-96 bg-[#ECA89F] rounded-full mix-blend-multiply filter blur-[100px] opacity-30"></div>
-            <div class="w-96 h-96 bg-gray-300 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 -ml-20 mt-20"></div>
-        </div>
-
-        <div class="text-center max-w-4xl mx-auto relative z-10">
-            <span class="text-[#ECA89F] font-bold tracking-widest uppercase text-sm mb-4 block">
-                Le secret de votre beauté
-            </span>
-            <h1 class="text-5xl md:text-6xl font-bold mb-10 tracking-tight text-[#222222] leading-tight">
-                Cuidado puro para <br> resaltar tu esencia
-            </h1>
+    <!-- SECCIÓN HERO ESTILO REVISTA -->
+    <section class="relative w-full pt-20 px-2 md:px-5 pb-5">
+        <div class="relative w-full h-[70vh] md:h-[85vh] rounded-[2rem] overflow-hidden bg-gray-200 shadow-2xl flex items-center justify-center">
             
-            <!-- Logo Horizontal Soukaina Pure ajustado (ya no se ve borroso) -->
-            <div class="mb-10 w-full flex justify-center">
-                <img src="Soukaina Pure-horizontal.png" alt="Soukaina Pure Presentación" class="max-w-sm md:max-w-lg h-auto object-contain rounded-xl shadow-2xl">
+            <!-- FOTO DE LA MODELO -->
+            <!-- Cuando tengas tu foto en la carpeta, cambia este enlace por "assets/tu-foto-modelo.jpg" -->
+            <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Modelo Soukaina Pure" 
+                 class="absolute inset-0 w-full h-full object-cover object-top md:object-center z-0">
+            
+            <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 z-10"></div>
+
+            <div class="absolute inset-0 flex flex-col justify-start items-center pt-10 md:pt-16 z-20 pointer-events-none">
+                <h1 class="text-[15vw] md:text-[12vw] font-black text-white/90 leading-none tracking-tighter uppercase drop-shadow-lg">
+                    SOUKAINA
+                </h1>
+                <p class="text-lg md:text-3xl text-white/90 font-bold tracking-[0.3em] uppercase drop-shadow-md">
+                    Cosmétique Naturelle
+                </p>
             </div>
 
-            <div class="flex justify-center gap-4">
-                <a href="CATALOGUE_PRODUIT_BUSINES_PRO.pdf" target="_blank" class="bg-[#222222] text-white py-3 px-8 rounded-md text-sm font-medium hover:bg-[#ECA89F] transition-colors shadow-lg">
-                    Ver Catálogo Completo
+            <!-- TARJETA FLOTANTE -->
+            <div class="absolute bottom-6 left-6 md:bottom-12 md:left-12 bg-white/95 backdrop-blur-xl p-4 md:p-6 rounded-3xl shadow-2xl z-30 w-72 md:w-80 border border-white/40">
+                <!-- Foto del producto en la tarjeta (cambiar a assets/foto-producto.png) -->
+                <div class="bg-gray-100 h-32 md:h-48 rounded-2xl mb-4 flex items-center justify-center p-4">
+                    <p class="text-gray-400 text-xs text-center font-bold">[FOTO PRODUCTO]</p>
+                </div>
+                <h3 class="font-black text-[#222222] text-lg leading-tight uppercase">Sérum Anti-Âge</h3>
+                <p class="text-gray-500 text-xs mb-4 mt-1 font-medium">Sérum restaurador facial</p>
+                
+                <a href="CATALOGUE_PRODUIT_BUSINES_PRO.pdf" target="_blank" class="flex items-center justify-between w-full bg-[#D32F2F] text-white font-bold py-3 md:py-4 px-5 rounded-2xl hover:bg-[#222222] transition-colors group">
+                    <span class="text-sm">Ver Catálogo</span>
+                    <span class="transform group-hover:translate-x-1 transition-transform">→</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN NUESTRA ESENCIA -->
-    <section class="py-20 bg-[#222222] text-white">
-        <div class="container mx-auto px-5 max-w-5xl flex flex-col md:flex-row items-center gap-12">
-            <div class="w-full md:w-1/3">
-                <img src="Soukaina Pure-story.png" alt="Historia Soukaina" class="w-full h-auto rounded-xl shadow-2xl border border-gray-700">
+    <!-- SECCIÓN DE PRODUCTOS -->
+    <section id="catalogo" class="py-20 bg-[#f8f9fa] px-5">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-black text-[#222222] uppercase tracking-tight">Nuestra Selección</h2>
+        </div>
+
+        <div class="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Producto 1 (Miel) -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative"><p class="text-gray-400 text-sm">[FOTO MIEL]</p></div>
+                <h3 class="font-bold text-lg mb-1">Miel Pura</h3>
+                <button class="w-full mt-4 bg-gray-100 text-[#222222] font-bold py-2 rounded-xl hover:bg-[#D32F2F] hover:text-white transition-colors">Pedir Info</button>
             </div>
-            <div class="w-full md:w-2/3 text-center md:text-left">
-                <h2 class="text-4xl font-bold mb-6 text-[#ECA89F]">Nuestra Esencia</h2>
-                <p class="text-gray-400 text-lg leading-relaxed mb-6">
-                    "Le secret de votre beauté" no es solo un eslogan, es la base de todo lo que hacemos. Seleccionamos cada producto para ofrecerte una experiencia de cuidado personal premium, respetando tu piel y realzando tu belleza natural cada día.
-                </p>
-                <button class="border border-[#ECA89F] text-[#ECA89F] py-2 px-6 rounded-md hover:bg-[#ECA89F] hover:text-[#222222] transition-colors font-medium">
-                    Descubrir más
-                </button>
+            <!-- Producto 2 (Belleza) -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative"><p class="text-gray-400 text-sm">[FOTO CREMA]</p></div>
+                <h3 class="font-bold text-lg mb-1">Cuidado Facial</h3>
+                <button class="w-full mt-4 bg-gray-100 text-[#222222] font-bold py-2 rounded-xl hover:bg-[#D32F2F] hover:text-white transition-colors">Pedir Info</button>
+            </div>
+            <!-- Producto 3 (Detox) -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative"><p class="text-gray-400 text-sm">[FOTO DETOX]</p></div>
+                <h3 class="font-bold text-lg mb-1">Pack Detox</h3>
+                <button class="w-full mt-4 bg-gray-100 text-[#222222] font-bold py-2 rounded-xl hover:bg-[#D32F2F] hover:text-white transition-colors">Pedir Info</button>
+            </div>
+            <!-- Producto 4 (Aloe) -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative"><p class="text-gray-400 text-sm">[FOTO ALOE]</p></div>
+                <h3 class="font-bold text-lg mb-1">Aloe Vera</h3>
+                <button class="w-full mt-4 bg-gray-100 text-[#222222] font-bold py-2 rounded-xl hover:bg-[#D32F2F] hover:text-white transition-colors">Pedir Info</button>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER OSCURO -->
-    <footer class="bg-[#151515] text-white py-16 px-5">
+    <!-- BANNER NUESTRA ESENCIA -->
+    <section id="esencia" class="py-20 bg-[#222222]">
+        <div class="container mx-auto px-5 max-w-4xl text-center">
+            <!-- Logo Horizontal en assets -->
+            <img src="assets/Soukaina-Pure-horizontal.png" alt="Soukaina Pure" class="mx-auto h-24 object-contain mb-8">
+            <p class="text-gray-400 text-xl leading-relaxed max-w-2xl mx-auto">
+                No vendemos cosmética, ofrecemos un estilo de vida. Cada producto está formulado para respetar el equilibrio natural de tu cuerpo, entregándote "Votre santé, à l'état pur".
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#1a1a1a] py-16 px-5">
         <div class="container mx-auto max-w-6xl flex flex-col items-center text-center">
-            <img src="Soukaina Pure-logo.png" alt="Soukaina Pure" class="h-24 mb-6 rounded-md shadow-lg">
-            
-            <p class="text-gray-400 text-sm mb-6">Le secret de votre beauté.</p>
+            <!-- Logo Cuadrado en assets -->
+            <img src="assets/Soukaina-Pure-logo.png" alt="Soukaina Pure" class="h-20 mb-6 rounded-xl shadow-lg">
             <div class="flex gap-6 mb-10">
-                <a href="#" class="text-gray-400 hover:text-[#ECA89F] transition-colors">Instagram</a>
-                <a href="#" class="text-gray-400 hover:text-[#ECA89F] transition-colors">Facebook</a>
-                <a href="#" class="text-gray-400 hover:text-[#ECA89F] transition-colors">TikTok</a>
+                <a href="#" class="text-gray-400 hover:text-[#D32F2F] transition-colors">Instagram</a>
+                <a href="#" class="text-gray-400 hover:text-[#D32F2F] transition-colors">WhatsApp</a>
             </div>
             <div class="border-t border-gray-800 w-full pt-6 text-gray-500 text-xs">
-                © 2026 Soukaina Pure por Ayoub. Todos los derechos reservados.
+                © 2026 Soukaina Pure. Tous droits réservés.
             </div>
         </div>
     </footer>
