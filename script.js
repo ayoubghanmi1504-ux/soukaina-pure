@@ -1,5 +1,5 @@
 // ==========================================
-// SOUKAINA PURE - MAIN SCRIPT
+// SOUKAINA PURE - COMPLETE MAIN SCRIPT
 // ==========================================
 
 const PHONE_NUMBER = "212710270328"; 
@@ -101,11 +101,19 @@ function renderCatalog() {
 
     if (!container || typeof productos === 'undefined') return;
 
+    // Detectar idioma actual de la página para los botones
+    const currentLang = document.documentElement.lang || 'en';
+    const uiText = {
+        'en': { details: 'Details 👁️', add: 'Add 🛒', empty: 'No products found' },
+        'fr': { details: 'Détails 👁️', add: 'Ajouter 🛒', empty: 'Aucun produit trouvé' },
+        'ar': { details: 'التفاصيل 👁️', add: 'إضافة 🛒', empty: 'لم يتم العثور على منتجات' }
+    }[currentLang] || { details: 'Details 👁️', add: 'Add 🛒', empty: 'No products found' };
+
     const query = searchElem ? searchElem.value.toLowerCase().trim() : '';
     const categorySelectVal = catElem ? catElem.value : 'all';
     const activeCategory = selectedCategory !== 'all' ? selectedCategory : categorySelectVal;
 
-    // Filtrar productos
+    // Filtrar productos por búsqueda y categoría
     const filtered = productos.filter(p => {
         const matchesQuery = p.name.toLowerCase().includes(query) || (p.descShort && p.descShort.toLowerCase().includes(query));
         const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
@@ -115,14 +123,13 @@ function renderCatalog() {
     if (filtered.length === 0) {
         container.innerHTML = `
             <div class="col-span-full text-center py-12 text-gray-400">
-                <p class="text-xl font-bold">No se encontraron productos</p>
-                <p class="text-sm">Prueba buscando con otra palabra o categoría.</p>
+                <p class="text-xl font-bold">${uiText.empty}</p>
             </div>`;
         if (loadMoreContainer) loadMoreContainer.classList.add('hidden');
         return;
     }
 
-    // Paginación (slice)
+    // Paginación (muestra de 8 en 8)
     const visibleItems = filtered.slice(0, currentVisibleCount);
 
     container.innerHTML = visibleItems.map(p => `
@@ -131,7 +138,7 @@ function renderCatalog() {
                 <!-- Clic en la foto para abrir modal -->
                 <div onclick="openProductModal(${p.id})" class="bg-gray-50 h-56 rounded-2xl mb-4 flex items-center justify-center relative overflow-hidden cursor-pointer">
                     ${p.tag ? `<span class="absolute top-3 right-3 bg-[#D32F2F] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase z-10 shadow-md tracking-wider">${p.tag}</span>` : ''}
-                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/300?text=Soukaina+Pure'">
+                    <img src="${p.image}" alt="${p.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/300?text=Soukaina+Pure'">
                 </div>
                 
                 <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">${p.category || 'General'}</span>
@@ -143,17 +150,17 @@ function renderCatalog() {
                 <p class="text-[#D32F2F] font-black text-xl mb-3">${obtenerPrecioTexto(p.price)}</p>
                 <div class="grid grid-cols-5 gap-2">
                     <button onclick="openProductModal(${p.id})" class="col-span-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-bold py-2.5 rounded-xl text-xs">
-                        Detalles 👁️
+                        ${uiText.details}
                     </button>
                     <button onclick="addToCart(${p.id})" class="col-span-3 bg-[#D32F2F] text-white font-bold py-2.5 rounded-xl hover:bg-[#222222] transition-all text-xs flex items-center justify-center gap-1">
-                        Añadir 🛒
+                        ${uiText.add}
                     </button>
                 </div>
             </div>
         </div>
     `).join('');
 
-    // Mostrar / Ocultar botón "Cargar más"
+    // Mostrar u ocultar botón "Load More"
     if (loadMoreContainer) {
         if (filtered.length > currentVisibleCount) {
             loadMoreContainer.classList.remove('hidden');
@@ -184,7 +191,7 @@ function openProductModal(productId) {
     if (price) price.innerText = obtenerPrecioTexto(p.price);
     if (category) category.innerText = p.category || 'General';
     if (desc) desc.innerText = p.descFull || p.descShort;
-    if (ingredients) ingredients.innerText = p.ingredients || "Ingredientes 100% naturales certificados.";
+    if (ingredients) ingredients.innerText = p.ingredients || "Natural formula.";
     
     if (addBtn) {
         addBtn.onclick = function() {
@@ -231,6 +238,7 @@ function toggleCart() {
 }
 
 function addToCart(productId) {
+    if (typeof productos === 'undefined') return;
     const product = productos.find(p => p.id === productId);
     if (!product) return;
 
@@ -244,7 +252,6 @@ function addToCart(productId) {
     saveCart();
     updateCartUI();
     
-    // Registrar evento de añadido al carrito en GA4
     if (typeof gtag === 'function') {
         gtag('event', 'add_to_cart', {
             'event_category': 'Ecommerce',
@@ -293,7 +300,7 @@ function updateCartUI() {
     if (!container) return;
 
     if (cart.length === 0) {
-        container.innerHTML = `<div class="text-center py-10 text-gray-400 font-medium">El carrito está vacío</div>`;
+        container.innerHTML = `<div class="text-center py-10 text-gray-400 font-medium">Cart is empty / Carrito vacío</div>`;
         return;
     }
 
@@ -321,10 +328,90 @@ function updateCartUI() {
 }
 
 // ------------------------------------------
-// 6. ENVIAR PEDIDO A WHATSAPP
+// 6. MODAL ESTILO AMAZON Y ENVÍO A WHATSAPP
 // ------------------------------------------
+function mostrarModalExito(titulo, mensaje, textoBoton) {
+    const modalExistente = document.getElementById('custom-success-modal');
+    if (modalExistente) modalExistente.remove();
+
+    const modalHTML = `
+        <div id="custom-success-modal" class="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 transition-opacity">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl border border-gray-100">
+                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black shadow-sm">
+                    ✓
+                </div>
+                <h3 class="text-xl font-black text-gray-900 mb-2">${titulo}</h3>
+                <p class="text-gray-600 text-sm leading-relaxed mb-6">${mensaje}</p>
+                <button onclick="cerrarModalExito()" class="w-full bg-[#D32F2F] hover:bg-[#222222] text-white font-bold py-3.5 rounded-xl transition-all shadow-md uppercase tracking-wider text-xs">
+                    ${textoBoton}
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function cerrarModalExito() {
+    const modal = document.getElementById('custom-success-modal');
+    if (modal) modal.remove();
+}
+
 function sendOrderToWhatsApp() {
-    if (cart.length === 0) return alert("Añade productos al carrito primero.");
+    const currentLang = document.documentElement.lang || 'en';
+
+    if (cart.length === 0) {
+        const alertMsgs = {
+            'en': 'Please add products to the cart first.',
+            'fr': 'Veuillez d\'abord ajouter des produits au panier.',
+            'ar': 'يرجى إضافة منتجات إلى السلة أولاً.'
+        };
+        return alert(alertMsgs[currentLang] || alertMsgs['en']);
+    }
+
+    const translations = {
+        'en': {
+            header: "🛍️ *SOUKAINA PURE — NEW ORDER*\n",
+            clientHeader: "📋 *CUSTOMER DETAILS*",
+            name: "👤 *Name:* ",
+            city: "📍 *City:* ",
+            productsHeader: "📦 *ORDER SUMMARY*",
+            payment: "💳 *Payment:* Cash on Delivery (COD)\n",
+            total: "💰 *TOTAL TO PAY:* ",
+            footer: "✨ _Please confirm my order to proceed with dispatch. Thank you!_",
+            successTitle: "Order Submitted!",
+            successMsg: "Thank you! Your order has been placed via WhatsApp. We will confirm your delivery shortly.",
+            btnText: "Continue Shopping 🛍️"
+        },
+        'fr': {
+            header: "🛍️ *SOUKAINA PURE — NOUVELLE COMMANDE*\n",
+            clientHeader: "📋 *DÉTAILS DU CLIENT*",
+            name: "👤 *Nom :* ",
+            city: "📍 *Ville :* ",
+            productsHeader: "📦 *RÉSUMÉ DE LA COMMANDE*",
+            payment: "💳 *Paiement :* Paiement à la livraison\n",
+            total: "💰 *TOTAL À PAYER :* ",
+            footer: "✨ _Merci de confirmer ma commande pour l'expédition. Merci !_ ",
+            successTitle: "Commande Envoyée !",
+            successMsg: "Merci ! Votre commande a été transmise via WhatsApp. Nous confirmerons l'expédition sous peu.",
+            btnText: "Continuer mes achats 🛍️"
+        },
+        'ar': {
+            header: "🛍️ *SOUKAINA PURE — طلب جديد*\n",
+            clientHeader: "📋 *تفاصيل العميل*",
+            name: "👤 *الاسم:* ",
+            city: "📍 *المدينة:* ",
+            productsHeader: "📦 *ملخص الطلب*",
+            payment: "💳 *طريقة الدفع:* الدفع عند الاستلام\n",
+            total: "💰 *المجموع الكلي:* ",
+            footer: "✨ _يرجى تأكيد طلبي للبدء في الشحن. شكراً لكم!_",
+            successTitle: "تم إرسال الطلب بنجاح!",
+            successMsg: "شكراً لك! تم إرسال طلبك عبر الواتساب وسنتواصل معك قريباً لتأكيد الشحن.",
+            btnText: "متابعة التسوق 🛍️"
+        }
+    };
+
+    const t = translations[currentLang] || translations['en'];
 
     const nameElem = document.getElementById('client-name');
     const cityElem = document.getElementById('client-city');
@@ -332,24 +419,24 @@ function sendOrderToWhatsApp() {
     const name = nameElem ? nameElem.value.trim() : '';
     const city = cityElem ? cityElem.value.trim() : '';
 
-    let message = "🌿 *NUEVO PEDIDO - SOUKAINA PURE* 🌿\n\n";
-    if (name) message += `👤 *Cliente:* ${name}\n`;
-    if (city) message += `📍 *Ciudad:* ${city}\n`;
-    message += `----------------------------------------\n`;
+    let message = `${t.header}\n`;
+    message += `${t.clientHeader}\n`;
+    message += `${t.name}${name || '-'}\n`;
+    message += `${t.city}${city || '-'}\n\n`;
+    message += `${t.productsHeader}\n`;
 
     let total = 0;
     cart.forEach(item => {
         const priceCalc = obtenerPrecioNumerico(item.price);
         const subtotal = priceCalc * item.quantity;
         total += subtotal;
-        message += `• *${item.name}* x${item.quantity} -> ${subtotal} ${monedaActual}\n`;
+        message += `▫️ *${item.quantity}x* ${item.name} — *${subtotal} ${monedaActual}*\n`;
     });
 
-    message += `----------------------------------------\n`;
-    message += `💰 *TOTAL ESTIMADO:* ${total} ${monedaActual}\n\n`;
-    message += `Por favor, confirmen mi pedido. ¡Muchas gracias!`;
+    message += `\n${t.payment}`;
+    message += `${t.total}*${total} ${monedaActual}*\n\n`;
+    message += `${t.footer}`;
 
-    // Medición en Google Analytics
     if (typeof gtag === 'function') {
         gtag('event', 'click_whatsapp_checkout', {
             'event_category': 'Ventas',
@@ -358,24 +445,43 @@ function sendOrderToWhatsApp() {
         });
     }
 
+    // 1. Abrir WhatsApp
     window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+
+    // 2. Limpiar formulario
+    if (nameElem) nameElem.value = '';
+    if (cityElem) cityElem.value = '';
+
+    // 3. Vaciar carrito
+    cart = [];
+    saveCart();
+    updateCartUI();
+
+    // 4. Cerrar panel del carrito
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+
+    if (drawer) {
+        if (isRtl) {
+            drawer.classList.add('-translate-x-full');
+        } else {
+            drawer.classList.add('translate-x-full');
+        }
+    }
+    if (overlay) overlay.classList.add('hidden');
+
+    // 5. Mostrar ventana emergente modal elegante
+    mostrarModalExito(t.successTitle, t.successMsg, t.btnText);
 }
 
 // ------------------------------------------
-// 7. CONTADOR DE VISITAS Y ARRANQUE
+// 7. ARRANQUE
 // ------------------------------------------
-function initVisitCounter() {
-    try {
-        let visits = parseInt(localStorage.getItem('soukaina_visits') || '0') + 1;
-        localStorage.setItem('soukaina_visits', visits);
-        const counter = document.getElementById('visit-counter');
-        if (counter) counter.innerText = visits;
-    } catch(e) {}
-}
-
 function initApp() {
     detectarUbicacionYMoneda();
-    initVisitCounter();
+    renderCatalog();
+    updateCartUI();
 }
 
 if (document.readyState === 'loading') {
