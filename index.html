@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soukaina Pure | Tu salud, en estado puro</title>
+    <title>Soukaina Pure | Pure Health & Wellness</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9905CBYM81"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9905CBYM81');
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ys3836pw5z");
+    </script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-white text-gray-800 font-sans antialiased">
+<body class="bg-gray-50 text-gray-800 font-sans antialiased relative">
 
-    <!-- CABECERA ROJA -->
+    <!-- HEADER -->
     <header class="bg-[#D32F2F] fixed top-0 w-full z-50 shadow-md">
         <div class="container mx-auto flex px-4 h-[90px] items-center justify-between">
             <button class="md:hidden text-white hover:text-gray-200">
@@ -24,33 +46,106 @@
             </a>
             
             <nav class="hidden md:flex flex-wrap items-center text-sm font-bold text-white/90 justify-center gap-8 mx-auto">
-                <a href="#catalogo" class="hover:text-white transition-colors">CATÁLOGO</a>
-                <a href="#esencia" class="hover:text-white transition-colors">NUESTRA ESENCIA</a>
+                <a href="#categories" class="hover:text-white transition-colors">CATEGORIES</a>
+                <a href="#catalogo" class="hover:text-white transition-colors">CATALOG</a>
+                <a href="#esencia" class="hover:text-white transition-colors">OUR ESSENCE</a>
+                <a href="#testimonios" class="hover:text-white transition-colors">REVIEWS</a>
+                <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
             </nav>
             
-            <!-- Selector de Idiomas y Contacto -->
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2 text-sm font-bold text-white/90">
-                    <a href="index.html" class="text-white transition-colors">ES</a>
-                    <span class="text-white/50">|</span>
-                    <a href="index-fr.html" class="hover:text-white transition-colors">FR</a>
-                    <span class="text-white/50">|</span>
-                    <a href="index-ar.html" class="hover:text-white transition-colors">AR</a>
+            <!-- Currency, Language, Cart & Contact -->
+            <div class="flex items-center gap-3 md:gap-4">
+                <!-- Currency Selector -->
+                <div class="currency-selector bg-white/20 text-white rounded-full px-2.5 py-1 text-xs font-bold flex items-center">
+                    <select id="monedaSelect" onchange="cambiarMoneda(this.value)" class="bg-transparent text-white font-bold outline-none cursor-pointer">
+                        <option value="DH" class="text-gray-800">🇲🇦 DH</option>
+                        <option value="€" class="text-gray-800">🇪🇺 €</option>
+                    </select>
                 </div>
-                <a href="https://wa.me/212710270328?text=Hola%20Soukaina%20Pure,%20necesito%20más%20información" target="_blank" class="hidden md:block bg-white text-[#D32F2F] text-sm font-bold py-2.5 px-7 rounded-full hover:bg-gray-100 transition-colors shadow-sm">
-                    Contactar
+
+              <!-- Language Selector -->
+<div class="flex items-center gap-1.5 text-xs md:text-sm font-bold text-white/90">
+    <a href="index.html" class="text-white font-extrabold underline">EN</a>
+    <span class="text-white/50">|</span>
+    <a href="index-fr.html" class="hover:text-white transition-colors">FR</a>
+    <span class="text-white/50">|</span>
+    <a href="index-ar.html" class="hover:text-white transition-colors">AR</a>
+</div>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCart()" class="relative bg-white/20 hover:bg-white/30 text-white p-2.5 rounded-full transition-all flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-white text-[#D32F2F] text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+
+                <a href="https://wa.me/212710270328?text=Hello%20Soukaina%20Pure,%20I%20need%20more%20information" target="_blank" class="hidden md:block bg-white text-[#D32F2F] text-sm font-bold py-2.5 px-7 rounded-full hover:bg-gray-100 transition-colors shadow-sm">
+                    Contact Us
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- SECCIÓN HERO -->
-    <section class="relative w-full h-[85vh] min-h-[600px] flex items-center mt-16 md:mt-20 overflow-hidden">
-        
-        <img src="assets/logic-by-forever2025-05-07-09-46-43.webp" 
-             alt="Modelos Soukaina Pure" 
-             class="absolute inset-0 w-full h-full object-cover object-center z-0">
-        
+    <!-- CART SIDEBAR DRAWER -->
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-[60] hidden transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white z-[70] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 bg-[#D32F2F] text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold flex items-center gap-2">🛒 Shopping Cart</h3>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-200 text-2xl font-bold">&times;</button>
+        </div>
+
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+
+        <div class="p-5 border-t border-gray-200 bg-gray-50 space-y-4">
+            <div class="flex justify-between items-center text-lg font-bold text-gray-900">
+                <span>Total:</span>
+                <span id="cart-total-price" class="text-[#D32F2F] text-xl font-black">0 DH</span>
+            </div>
+
+            <div class="space-y-2">
+                <input type="text" id="client-name" placeholder="Your name (optional)" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#D32F2F]">
+                <input type="text" id="client-city" placeholder="Your city (optional)" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#D32F2F]">
+            </div>
+
+            <button onclick="sendOrderToWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20b858] text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base">
+                <span>Order via WhatsApp</span> 💬
+            </button>
+        </div>
+    </aside>
+
+    <!-- PRODUCT DETAILS MODAL -->
+    <div id="product-modal-overlay" onclick="closeProductModal()" class="fixed inset-0 bg-black/60 z-[80] hidden transition-opacity"></div>
+    <div id="product-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white rounded-3xl z-[90] shadow-2xl hidden overflow-hidden max-h-[90vh] flex flex-col">
+        <div class="relative bg-gray-100 h-64">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-800 rounded-full w-9 h-9 flex items-center justify-center font-bold text-xl shadow z-10">&times;</button>
+            <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6 overflow-y-auto flex-1 space-y-4">
+            <span id="modal-category" class="bg-red-100 text-[#D32F2F] text-xs font-bold px-3 py-1 rounded-full uppercase"></span>
+            <h3 id="modal-title" class="text-2xl font-black text-gray-900 mt-2"></h3>
+            <p id="modal-price" class="text-2xl font-black text-[#D32F2F]"></p>
+            
+            <div>
+                <h4 class="font-bold text-sm text-gray-800 uppercase tracking-wider mb-1">Description:</h4>
+                <p id="modal-desc" class="text-gray-600 text-sm leading-relaxed"></p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-sm text-gray-800 uppercase tracking-wider mb-1">Ingredients:</h4>
+                <p id="modal-ingredients" class="text-gray-600 text-sm leading-relaxed italic bg-gray-50 p-3 rounded-xl border border-gray-100"></p>
+            </div>
+        </div>
+        <div class="p-5 border-t border-gray-100 bg-gray-50">
+            <button id="modal-add-btn" class="w-full bg-[#D32F2F] hover:bg-[#222222] text-white font-bold py-3.5 rounded-xl transition-all shadow-lg text-center uppercase tracking-wider text-sm">
+                Add to Cart 🛒
+            </button>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative w-full h-[85vh] min-h-[600px] flex items-center mt-16 md:mt-20 overflow-hidden bg-white">
+        <img src="assets/logic-by-forever2025-05-07-09-46-43.webp" alt="Soukaina Pure Models" class="absolute inset-0 w-full h-full object-cover object-center z-0">
         <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent z-10 md:w-3/4"></div>
 
         <div class="container mx-auto px-5 relative z-20 w-full">
@@ -60,289 +155,244 @@
                 </h1>
                 
                 <h2 class="text-xl md:text-2xl font-bold mb-6 tracking-wide italic drop-shadow-sm">
-                    <span class="text-gray-500">Tu salud,</span> <span class="text-[#D32F2F]">en estado puro.</span>
+                    <span class="text-gray-500">Your health,</span> <span class="text-[#D32F2F]">in its purest form.</span>
                 </h2>
                 
                 <p class="text-gray-700 mb-10 text-lg md:text-xl leading-relaxed font-bold max-w-md">
-                    Cosmética y bienestar. Fórmulas de alto rendimiento elaboradas con ingredientes naturales para una piel sana y radiante.
+                    High-performance cosmetics and natural wellness formulas tailored to reveal your skin's radiance.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="assets/catalogo.pdf" target="_blank" class="bg-[#D32F2F] text-white py-4 px-10 rounded-full text-base font-bold hover:bg-[#222222] transition-all shadow-xl shadow-red-500/30 text-center uppercase tracking-wider">
-                        Ver Colección
+                    <a href="#catalogo" class="bg-[#D32F2F] text-white py-4 px-10 rounded-full text-base font-bold hover:bg-[#222222] transition-all shadow-xl shadow-red-500/30 text-center uppercase tracking-wider">
+                        Explore Catalog
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- BARRA DE GARANTÍAS -->
-    <div class="bg-gray-50 border-b border-gray-100 py-6">
+    <!-- GUARANTEES BAR -->
+    <div class="bg-white border-y border-gray-200 py-6">
         <div class="container mx-auto px-5 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div class="flex items-center justify-center gap-3">
                 <span class="text-3xl">🚚</span>
-                <p class="font-bold text-[#222222] text-sm tracking-wide">Envíos a todo el país</p>
+                <p class="font-bold text-[#222222] text-sm tracking-wide">Nationwide Delivery</p>
             </div>
             <div class="flex items-center justify-center gap-3">
                 <span class="text-3xl">💳</span>
-                <p class="font-bold text-[#222222] text-sm tracking-wide">Pago seguro a la entrega</p>
+                <p class="font-bold text-[#222222] text-sm tracking-wide">Cash on Delivery</p>
             </div>
             <div class="flex items-center justify-center gap-3">
                 <span class="text-3xl">✨</span>
-                <p class="font-bold text-[#222222] text-sm tracking-wide">Calidad 100% Certificada</p>
+                <p class="font-bold text-[#222222] text-sm tracking-wide">100% Certified Quality</p>
             </div>
         </div>
     </div>
 
-    <!-- SECCIÓN DE PRODUCTOS -->
-    <section id="catalogo" class="py-24 bg-white px-5">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight">LOS MÁS VENDIDOS</h2>
-            <div class="w-24 h-1 bg-[#D32F2F] mx-auto mt-6 rounded-full"></div>
-        </div>
-
-        <div class="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <!-- Producto 1: Miel -->
-            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100 group flex flex-col">
-                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative overflow-hidden">
-                    <span class="absolute top-3 right-3 bg-[#D32F2F] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase z-10 shadow-md tracking-wider">Top Ventas</span>
-                    <img src="assets/mielPura.jpg" alt="Miel Pura" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                </div>
-                <div class="flex-grow">
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-[#D32F2F] transition-colors">Miel Pura</h3>
-                    <p class="text-gray-500 text-sm mb-4">Refuerza tus defensas y energía de forma natural.</p>
-                </div>
-                <a href="https://wa.me/212710270328?text=Hola,%20me%20gustaría%20pedir%20información%20sobre%20la%20Miel%20Pura" target="_blank" class="flex items-center justify-center gap-2 w-full bg-[#f8f9fa] border border-gray-200 text-[#222222] font-bold py-3 rounded-xl hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all text-sm">
-                    Pedir por WhatsApp
-                </a>
+    <!-- FEATURED CATEGORIES (NUEVA SECCIÓN VISUAL) -->
+    <section id="categories" class="py-16 bg-gray-50 px-5">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black text-[#222222] uppercase tracking-tight">Browse Collections</h2>
+                <div class="w-16 h-1 bg-[#D32F2F] mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <!-- Producto 2: Crema -->
-            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100 group flex flex-col">
-                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative overflow-hidden">
-                    <span class="absolute top-3 right-3 bg-[#D32F2F] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase z-10 shadow-md tracking-wider">Top Ventas</span>
-                    <img src="assets/Deep.jpg" alt="Cuidado Facial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div onclick="selectCategory('Bienestar')" class="group relative h-64 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all">
+                    <img src="assets/p7.jpg" alt="Wellness" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <span class="text-xs font-bold uppercase tracking-widest text-red-400">Natural Health</span>
+                        <h3 class="text-2xl font-black mt-1">Wellness & Nutrition</h3>
+                        <p class="text-xs text-white/80 mt-1">Gels, vitamins & immune support →</p>
+                    </div>
                 </div>
-                <div class="flex-grow">
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-[#D32F2F] transition-colors">Deep Moisturizing</h3>
-                    <p class="text-gray-500 text-sm mb-4">Hidratación profunda para una piel radiante.</p>
-                </div>
-                <a href="https://wa.me/212710270328?text=Hola,%20me%20gustaría%20pedir%20información%20sobre%20la%20crema%20Deep%20Moisturizing" target="_blank" class="flex items-center justify-center gap-2 w-full bg-[#f8f9fa] border border-gray-200 text-[#222222] font-bold py-3 rounded-xl hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all text-sm">
-                    Pedir por WhatsApp
-                </a>
-            </div>
 
-            <!-- Producto 3: Detox -->
-            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100 group flex flex-col">
-                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative overflow-hidden">
-                    <span class="absolute top-3 right-3 bg-[#D32F2F] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase z-10 shadow-md tracking-wider">Top Ventas</span>
-                    <img src="assets/packDetox.jpg" alt="Pack Detox" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <!-- Card 2 -->
+                <div onclick="selectCategory('Cosmética')" class="group relative h-64 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all">
+                    <img src="assets/p3.jpg" alt="Cosmetics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <span class="text-xs font-bold uppercase tracking-widest text-red-400">Glow & Care</span>
+                        <h3 class="text-2xl font-black mt-1">Facial Cosmetics</h3>
+                        <p class="text-xs text-white/80 mt-1">Collagen, serums & moisturisers →</p>
+                    </div>
                 </div>
-                <div class="flex-grow">
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-[#D32F2F] transition-colors">Pack Detox</h3>
-                    <p class="text-gray-500 text-sm mb-4">Purifica tu cuerpo y siéntete más ligero.</p>
-                </div>
-                <a href="https://wa.me/212710270328?text=Hola,%20me%20gustaría%20pedir%20información%20sobre%20el%20Pack%20Detox" target="_blank" class="flex items-center justify-center gap-2 w-full bg-[#f8f9fa] border border-gray-200 text-[#222222] font-bold py-3 rounded-xl hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all text-sm">
-                    Pedir por WhatsApp
-                </a>
-            </div>
 
-            <!-- Producto 4: Aloe Vera -->
-            <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all border border-gray-100 group flex flex-col">
-                <div class="bg-gray-50 h-56 rounded-2xl mb-5 flex items-center justify-center relative overflow-hidden">
-                    <span class="absolute top-3 right-3 bg-[#D32F2F] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase z-10 shadow-md tracking-wider">Top Ventas</span>
-                    <img src="assets/aloeVera.jpg" alt="Aloe Vera" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <!-- Card 3 -->
+                <div onclick="selectCategory('Packs')" class="group relative h-64 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all">
+                    <img src="assets/p34.jpg" alt="Packs" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <span class="text-xs font-bold uppercase tracking-widest text-red-400">Best Savings</span>
+                        <h3 class="text-2xl font-black mt-1">Special Packs</h3>
+                        <p class="text-xs text-white/80 mt-1">Detox C9 & full body transformation →</p>
+                    </div>
                 </div>
-                <div class="flex-grow">
-                    <h3 class="font-bold text-lg mb-2 group-hover:text-[#D32F2F] transition-colors">Zumo de Aloe Vera</h3>
-                    <p class="text-gray-500 text-sm mb-4">Mejora tu digestión con nuestro producto estrella.</p>
-                </div>
-                <a href="https://wa.me/212710270328?text=Hola,%20me%20gustaría%20pedir%20información%20sobre%20el%20zumo%20de%20Aloe%20Vera" target="_blank" class="flex items-center justify-center gap-2 w-full bg-[#f8f9fa] border border-gray-200 text-[#222222] font-bold py-3 rounded-xl hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all text-sm">
-                    Pedir por WhatsApp
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DE TESTIMONIOS -->
+    <!-- CATALOG SECTION (NUEVO DISEÑO CON BOTÓN LOAD MORE) -->
+    <section id="catalogo" class="py-20 bg-white px-5">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight uppercase">OUR CATALOGUE</h2>
+                <div class="w-24 h-1 bg-[#D32F2F] mx-auto mt-3 rounded-full mb-8"></div>
+
+                <!-- Search & Tab Filter -->
+                <div class="max-w-2xl mx-auto space-y-5">
+                    <div class="relative">
+                        <input type="text" id="search-input" oninput="filterProducts()" placeholder="🔍 Search product by name..." class="w-full px-6 py-3.5 rounded-full border border-gray-300 focus:outline-none focus:border-[#D32F2F] shadow-sm text-sm">
+                    </div>
+                    
+                    <!-- Modern Category Pills -->
+                    <div class="flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-2">
+                        <button onclick="filterCategoryTab('all')" class="category-btn active px-5 py-2 rounded-full text-xs font-bold bg-[#D32F2F] text-white shadow-sm transition-all" data-cat="all">All</button>
+                        <button onclick="filterCategoryTab('Bienestar')" class="category-btn px-5 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all" data-cat="Bienestar">Wellness</button>
+                        <button onclick="filterCategoryTab('Cosmética')" class="category-btn px-5 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all" data-cat="Cosmética">Cosmetics</button>
+                        <button onclick="filterCategoryTab('Packs')" class="category-btn px-5 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all" data-cat="Packs">Special Packs</button>
+                        <button onclick="filterCategoryTab('Cuidado Personal')" class="category-btn px-5 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm transition-all" data-cat="Cuidado Personal">Personal Care</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="catalog-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
+
+            <!-- Load More Action Button -->
+            <div id="load-more-container" class="text-center mt-12 hidden">
+                <button onclick="loadMoreProducts()" class="bg-[#222222] hover:bg-[#D32F2F] text-white font-bold py-4 px-10 rounded-full text-sm uppercase tracking-wider transition-all shadow-lg hover:scale-105">
+                    Load More Products 📦
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
     <section id="testimonios" class="py-24 bg-[#fafafa] px-5">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight">LO QUE DICEN NUESTROS CLIENTES</h2>
+            <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight">WHAT OUR CUSTOMERS SAY</h2>
             <div class="w-24 h-1 bg-[#D32F2F] mx-auto mt-6 rounded-full"></div>
         </div>
 
         <div class="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pt-8">
-            
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative mt-6 md:mt-0">
-                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Cliente" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
+                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Client" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
                 <div class="flex justify-center text-[#D32F2F] text-xl mb-4 mt-8">★★★★★</div>
                 <p class="text-gray-600 text-center italic mb-6 leading-relaxed">
-                    "El cuidado facial ha cambiado mi piel por completo. En solo dos semanas noté mucha más luminosidad y una hidratación profunda que dura todo el día."
+                    "The facial care set completely transformed my skin. In just two weeks, I noticed deep hydration and a natural glow."
                 </p>
                 <h4 class="text-center font-bold text-[#222222] text-sm uppercase tracking-wider">Amina S.</h4>
             </div>
 
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative mt-12 md:mt-0">
-                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Cliente" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Client" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
                 <div class="flex justify-center text-[#D32F2F] text-xl mb-4 mt-8">★★★★★</div>
                 <p class="text-gray-600 text-center italic mb-6 leading-relaxed">
-                    "La miel pura es espectacular. La tomo cada mañana y he notado un cambio brutal en mis defensas y en mi energía. Calidad premium indiscutible."
+                    "The pure honey is amazing. I take it every morning and noticed a noticeable improvement in my energy levels."
                 </p>
                 <h4 class="text-center font-bold text-[#222222] text-sm uppercase tracking-wider">Karim B.</h4>
             </div>
 
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative mt-12 md:mt-0">
-                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
                 <div class="flex justify-center text-[#D32F2F] text-xl mb-4 mt-8">★★★★★</div>
                 <p class="text-gray-600 text-center italic mb-6 leading-relaxed">
-                    "Probé el pack Detox con el Aloe Vera y los resultados son reales. Me siento mucho más ligera, sin inflamación y el sabor es muy natural."
+                    "I tried the Detox pack with Aloe Vera and the results are real. I feel much lighter and fully revitalised."
                 </p>
                 <h4 class="text-center font-bold text-[#222222] text-sm uppercase tracking-wider">Leila M.</h4>
             </div>
         </div>
-
-        <div id="testimonios-extra" class="hidden container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-8 pt-10 mt-4 justify-center">
-            
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative mt-12 md:mt-0">
-                <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Cliente" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
-                <div class="flex justify-center text-[#D32F2F] text-xl mb-4 mt-8">★★★★★</div>
-                <p class="text-gray-600 text-center italic mb-6 leading-relaxed">
-                    "Increíble el trato por WhatsApp y lo rápido que llegó el pedido. El sérum se absorbe rapidísimo y no deja sensación grasa. Repetiré seguro."
-                </p>
-                <h4 class="text-center font-bold text-[#222222] text-sm uppercase tracking-wider">Sarah V.</h4>
-            </div>
-
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative mt-12 md:mt-0">
-                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Cliente" class="w-20 h-20 rounded-full object-cover absolute -top-10 left-1/2 transform -translate-x-1/2 border-4 border-white shadow-md bg-gray-200">
-                <div class="flex justify-center text-[#D32F2F] text-xl mb-4 mt-8">★★★★★</div>
-                <p class="text-gray-600 text-center italic mb-6 leading-relaxed">
-                    "Buscaba cosmética sin químicos agresivos y Soukaina Pure es justo lo que necesitaba. Se nota que los ingredientes son de primera calidad."
-                </p>
-                <h4 class="text-center font-bold text-[#222222] text-sm uppercase tracking-wider">Youssef E.</h4>
-            </div>
-        </div>
-
-        <div class="text-center mt-16" id="contenedor-boton-testimonios">
-            <button onclick="document.getElementById('testimonios-extra').classList.remove('hidden'); document.getElementById('contenedor-boton-testimonios').classList.add('hidden');" class="border-2 border-[#D32F2F] text-[#D32F2F] font-bold py-3 px-8 rounded-full hover:bg-[#D32F2F] hover:text-white transition-colors uppercase tracking-widest text-sm">
-                Ver todas las opiniones
-            </button>
-        </div>
     </section>
 
-    <!-- BANNER NUESTRA FILOSOFÍA -->
+    <!-- OUR ESSENCE -->
     <section id="esencia" class="py-24 bg-[#D32F2F] text-white border-b border-white/10">
         <div class="container mx-auto px-5 max-w-5xl text-center">
-            <h2 class="text-3xl md:text-4xl font-black mb-6 tracking-tight uppercase">Nuestra Filosofía</h2>
+            <h2 class="text-3xl md:text-4xl font-black mb-6 tracking-tight uppercase">Our Philosophy</h2>
             <div class="w-16 h-1 bg-white mx-auto mb-10 rounded-full opacity-70"></div>
             
             <p class="text-white/95 text-lg md:text-2xl leading-relaxed max-w-3xl mx-auto font-medium italic mb-14">
-                "Creemos que la verdadera salud y belleza nacen de la naturaleza. En Soukaina Pure, transformamos los ingredientes más puros en bienestar para tu día a día."
+                "We believe true health and beauty originate from nature. At Soukaina Pure, we transform pure botanical ingredients into daily well-being."
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">
-                        🌿 100% Natural
-                    </h3>
-                    <p class="text-white/80 text-sm leading-relaxed">
-                        Seleccionamos cuidadosamente el mejor Aloe Vera y extractos botánicos. Fórmulas respetuosas para que tu piel y tu cuerpo respiren pureza.
-                    </p>
+                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">🌿 100% Natural</h3>
+                    <p class="text-white/80 text-sm leading-relaxed">We carefully source top-tier Aloe Vera and botanical extracts for gentle, effective care.</p>
                 </div>
                 <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">
-                        ✨ Alta Calidad
-                    </h3>
-                    <p class="text-white/80 text-sm leading-relaxed">
-                        Tratamientos exclusivos de alto rendimiento diseñados para ofrecerte resultados reales y duraderos, cuidándote por dentro y por fuera.
-                    </p>
+                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">✨ Premium Quality</h3>
+                    <p class="text-white/80 text-sm leading-relaxed">High-performance formulas designed to deliver visible, long-lasting results.</p>
                 </div>
                 <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors">
-                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">
-                        🤝 Trato Cercano
-                    </h3>
-                    <p class="text-white/80 text-sm leading-relaxed">
-                        No somos solo una tienda, somos tu asesor personal de bienestar. Te acompañamos por WhatsApp para recomendarte exactamente lo que necesitas.
-                    </p>
+                    <h3 class="text-xl font-bold mb-3 text-white flex items-center gap-2">🤝 Personalised Support</h3>
+                    <p class="text-white/80 text-sm leading-relaxed">We guide you on WhatsApp to recommend exact solutions tailored to your goals.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PREGUNTAS FRECUENTES -->
+    <!-- FAQ -->
     <section id="faq" class="py-24 bg-white px-5">
         <div class="container mx-auto max-w-3xl">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight">PREGUNTAS FRECUENTES</h2>
+                <h2 class="text-3xl md:text-4xl font-black text-[#222222] tracking-tight uppercase">FREQUENTLY ASKED QUESTIONS</h2>
                 <div class="w-24 h-1 bg-[#D32F2F] mx-auto mt-6 rounded-full"></div>
             </div>
             
             <div class="space-y-4">
                 <details class="bg-gray-50 rounded-2xl p-6 cursor-pointer group shadow-sm border border-gray-100">
                     <summary class="font-bold text-lg text-[#222222] list-none flex justify-between items-center">
-                        ¿Cuánto tarda en llegar mi pedido?
+                        How long does delivery take?
                         <span class="text-[#D32F2F] transition group-open:rotate-180">▼</span>
                     </summary>
-                    <p class="mt-4 text-gray-600 leading-relaxed font-medium">Normalmente, los envíos tardan entre 24 y 48 horas en llegar a tu domicilio dependiendo de tu ciudad. Nos pondremos en contacto contigo por WhatsApp para confirmar la entrega.</p>
+                    <p class="mt-4 text-gray-600 leading-relaxed font-medium">Deliveries usually take between 24 and 48 hours. We confirm all details with you via WhatsApp before dispatching.</p>
                 </details>
                 
                 <details class="bg-gray-50 rounded-2xl p-6 cursor-pointer group shadow-sm border border-gray-100">
                     <summary class="font-bold text-lg text-[#222222] list-none flex justify-between items-center">
-                        ¿Cómo se realiza el pago?
+                        How is payment handled?
                         <span class="text-[#D32F2F] transition group-open:rotate-180">▼</span>
                     </summary>
-                    <p class="mt-4 text-gray-600 leading-relaxed font-medium">Para tu total tranquilidad, el pago se realiza en efectivo en el momento en el que el repartidor te entrega el producto en tus manos. Sin tarjetas ni pagos adelantados.</p>
-                </details>
-                
-                <details class="bg-gray-50 rounded-2xl p-6 cursor-pointer group shadow-sm border border-gray-100">
-                    <summary class="font-bold text-lg text-[#222222] list-none flex justify-between items-center">
-                        ¿Los productos son aptos para pieles sensibles?
-                        <span class="text-[#D32F2F] transition group-open:rotate-180">▼</span>
-                    </summary>
-                    <p class="mt-4 text-gray-600 leading-relaxed font-medium">Sí, nuestras fórmulas están basadas en ingredientes naturales como el Aloe Vera puro, ideales para cuidar, hidratar y calmar todo tipo de pieles, incluso las más reactivas.</p>
+                    <p class="mt-4 text-gray-600 leading-relaxed font-medium">Payment is made in cash upon receiving your order in hand (Cash on Delivery).</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER ROJO -->
+    <!-- FOOTER -->
     <footer class="bg-[#D32F2F] py-16 px-5">
         <div class="container mx-auto max-w-6xl flex flex-col items-center text-center">
-            
-            <!-- Logo Transparente -->
             <img src="assets/Soukaina-Pure-logo-transparent.png" alt="Soukaina Pure" class="h-20 mb-8 object-contain">
             
-            <!-- Redes Sociales y Contacto -->
             <div class="flex flex-col md:flex-row gap-6 md:gap-10 mb-10 items-center">
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/soukainamansouri250?stkn=ZXNsOWdiMW45bDZ1" target="_blank" class="flex items-center gap-2 text-white/90 hover:text-white font-bold tracking-wide transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                <a href="https://www.instagram.com/soukainamansouri250?stkn=ZXNsOWdiMW45bDZ1" target="_blank" class="text-white/90 hover:text-white font-bold tracking-wide transition-colors">
                     Instagram
                 </a>
-                
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/share/19RUYrS9LH/" target="_blank" class="flex items-center gap-2 text-white/90 hover:text-white font-bold tracking-wide transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <a href="https://www.facebook.com/share/19RUYrS9LH/" target="_blank" class="text-white/90 hover:text-white font-bold tracking-wide transition-colors">
                     Facebook
                 </a>
-                
-                <!-- WhatsApp con número visible -->
-                <a href="https://wa.me/212710270328" target="_blank" class="flex items-center gap-2 text-white/90 hover:text-white font-bold tracking-wide transition-colors bg-white/10 px-5 py-2.5 rounded-full border border-white/20 shadow-sm">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.128.555 4.195 1.613 6.012L.413 24l6.113-1.603c1.748.966 3.722 1.478 5.767 1.478 6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 21.897c-1.815 0-3.593-.487-5.15-1.408l-.369-.219-3.824 1.003 1.023-3.73-.24-.382C2.553 15.656 2.052 13.865 2.052 12.031c0-5.513 4.485-9.998 9.979-9.998 5.514 0 9.998 4.485 9.998 9.998s-4.484 9.998-9.998 9.998zm5.48-7.48c-.3-.15-1.774-.876-2.049-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95.1.175-.175.175-.35 0-.525-.15-.2-1.25-.475-2.224-1.35-.75-.675-1.275-1.525-1.425-1.825-.15-.3-.025-.45.125-.6.125-.125.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525-.175 0-.375 0-.575 0-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.1 3.2 5.075 4.475.7.3 1.25.475 1.675.6.7.2 1.35.175 1.85.1.55-.075 1.774-.725 2.024-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
-                    Pedidos: +212 710 270 328
+                <a href="https://wa.me/212710270328" target="_blank" class="text-white/90 hover:text-white font-bold tracking-wide transition-colors bg-white/10 px-5 py-2.5 rounded-full border border-white/20 shadow-sm">
+                    Orders: +212 710 270 328
                 </a>
             </div>
             
-            <div class="border-t border-white/20 w-full pt-6 text-white/70 text-xs font-medium tracking-wider">
-                © 2026 Soukaina Pure. Todos los derechos reservados.
+            <div class="border-t border-white/20 w-full pt-6 flex flex-col md:flex-row items-center justify-between text-white/70 text-xs font-medium gap-4">
+                <p>© 2026 Soukaina Pure. All rights reserved.</p>
+                <p class="bg-black/20 px-4 py-1.5 rounded-full">👁️ Total visits: <span id="visit-counter" class="font-bold text-white">1</span></p>
             </div>
         </div>
     </footer>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <!-- FLOATING WHATSAPP BUTTON -->
     <a href="https://wa.me/212710270328" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 hover:bg-[#20b858] transition-transform duration-300 z-50 flex items-center justify-center border-2 border-white">
         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.128.555 4.195 1.613 6.012L.413 24l6.113-1.603c1.748.966 3.722 1.478 5.767 1.478 6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 21.897c-1.815 0-3.593-.487-5.15-1.408l-.369-.219-3.824 1.003 1.023-3.73-.24-.382C2.553 15.656 2.052 13.865 2.052 12.031c0-5.513 4.485-9.998 9.979-9.998 5.514 0 9.998 4.485 9.998 9.998s-4.484 9.998-9.998 9.998zm5.48-7.48c-.3-.15-1.774-.876-2.049-.976-.275-.1-.475-.15-.675.15-.2.3-.775.976-.95.1.175-.175.175-.35 0-.525-.15-.2-1.25-.475-2.224-1.35-.75-.675-1.275-1.525-1.425-1.825-.15-.3-.025-.45.125-.6.125-.125.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.25-.6-.5-.525-.675-.525-.175 0-.375 0-.575 0-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5 0 1.475 1.075 2.9 1.225 3.1.15.2 2.1 3.2 5.075 4.475.7.3 1.25.475 1.675.6.7.2 1.35.175 1.85.1.55-.075 1.774-.725 2.024-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
     </a>
 
+    <!-- Scripts -->
+    <script src="products.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
