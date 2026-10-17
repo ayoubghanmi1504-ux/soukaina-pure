@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ayoubghanmi1504-ux.github.io/soukaina-pure/sitemap.xml

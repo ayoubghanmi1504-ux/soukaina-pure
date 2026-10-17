@@ -405,7 +405,7 @@ const productos = [
     },
     { 
         id: 37, 
-        name: "Forever Lycium Plus", 
+        name: "Forsever Lycium Plu", 
         price: 520, 
         category: "Bienestar",
         image: "assets/p37.jpg", 
