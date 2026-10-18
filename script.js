@@ -79,7 +79,7 @@ document.querySelectorAll('[data-i]').forEach(e => e.textContent = t(e.dataset.i
 document.querySelectorAll('[data-ip]').forEach(e => e.placeholder = t(e.dataset.ip));
 document.querySelectorAll('.lang a')[L].classList.add('on');
 $('#cur').value = cur;
-$('#cur').onchange = e => { cur = e.target.value; localStorage.cur = cur; draw(); ui(); };
+$('#cur').onchange = e => { cur = e.target.value; localStorage.cur = cur; draw(); ui(); drawPacks(); };
 document.querySelectorAll('nav a').forEach(a => a.onclick = () => document.body.classList.remove('menu'));
 addEventListener('scroll', () => $('#hd').classList.toggle('sc', scrollY > 20), { passive: true });
 addEventListener('keydown', e => e.key == 'Escape' && closeAll());
@@ -168,7 +168,19 @@ function consent(v) { localStorage.ck = v; $('#ck').hidden = true; if (v) loadA(
 if (localStorage.ck == '1') loadA(); else if (localStorage.ck == null) $('#ck').hidden = false;
 
 const packs = productos.filter(p => p.category == 'Packs');
-$('#prow').innerHTML = packs.map(p => card(p).replace('card rv', 'card rv in')).join('');
+const packCard = p => `<article class="pk"><button class="pki" onclick="openP(${p.id})" aria-label="${p.name}"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.visibility='hidden'">${p.tag ? `<i>${t(p.tag)}</i>` : ''}</button><div class="pkb"><h3>${p.name}</h3><p class="pkd">${tx(p, 0, 'descShort')}</p><div class="pkf"><b>${fmt(p.price)}</b><button class="btn" onclick="add(${p.id})">+ ${t('add')}</button></div></div></article>`;
+const prow = $('#prow'), arrs = document.querySelectorAll('.arr button');
+function pk(d) { prow.scrollBy({ left: d * ((prow.firstElementChild || {}).offsetWidth + 22 || 340), behavior: 'smooth' }); }
+function upd() { const m = prow.scrollWidth - prow.clientWidth, o = L == 2 ? m + prow.scrollLeft : prow.scrollLeft; arrs[0].disabled = o <= 2; arrs[1].disabled = o >= m - 2; }
+function drawPacks() { prow.innerHTML = packs.map(packCard).join(''); upd(); }
+drawPacks(); prow.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd);
+// Arrastrar con el ratón (en móvil se desliza con el dedo)
+let dn = 0, sx = 0, sl = 0, mv = 0;
+prow.addEventListener('pointerdown', e => { if (e.pointerType == 'mouse') { dn = 1; mv = 0; sx = e.clientX; sl = prow.scrollLeft; } });
+addEventListener('pointermove', e => { if (dn) { mv = Math.abs(e.clientX - sx); if (mv > 5) prow.classList.add('drag'); prow.scrollLeft = sl - (e.clientX - sx); } });
+addEventListener('pointerup', () => { dn = 0; setTimeout(() => prow.classList.remove('drag'), 0); });
+prow.addEventListener('click', e => { if (mv > 5) { e.stopPropagation(); e.preventDefault(); mv = 0; } }, true);
+prow.addEventListener('dragstart', e => e.preventDefault());
 $('#packs').hidden = !packs.length;
 
 // SEO: canonical por idioma y datos estructurados de producto
